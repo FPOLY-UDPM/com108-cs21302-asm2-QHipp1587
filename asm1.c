@@ -1,7 +1,7 @@
 /******************************************************************************
- * Họ và tên: [ĐIỀN TÊN TẠI ĐÂY]
- * MSSV:      [ĐIỀN MSSV TẠI ĐÂY]
- * Lớp:       [ĐIỀN LỚP TẠI ĐÂY]
+ * Họ và tên: [Nguyễn Quốc Hiệp]
+ * MSSV:      [PS48461]
+ * Lớp:       [CS21301]
  *****************************************************************************/
 
 // Tạo file asm2.c và hoàn thiện nội dung Assignment từ nội dung file asm1.c
@@ -21,74 +21,182 @@
 // Viết chương trình C thực hiện các chức năng trên
 
 #include <stdio.h>
+#include <math.h>
 
+// ====== CHUC NANG 1: KIEM TRA SO NGUYEN TO ======
+void kiemTraSoNguyenTo() {
+    int n, i, flag = 1;
+    printf("Nhap so: ");
+    scanf("%d", &n);
+
+    if(n < 2) flag = 0;
+    for(i = 2; i <= sqrt(n); i++) {
+        if(n % i == 0) {
+            flag = 0;
+            break;
+        }
+    }
+
+    if(flag)
+        printf("%d la so nguyen to\n", n);
+    else
+        printf("%d khong phai so nguyen to\n", n);
+}
+
+// ====== CHUC NANG 2: UCLN VA BCNN ======
+void ucln_bcnn() {
+    int a, b, tempA, tempB;
+    printf("Nhap 2 so: ");
+    scanf("%d%d", &a, &b);
+
+    tempA = a;
+    tempB = b;
+
+    while(b != 0) {
+        int r = a % b;
+        a = b;
+        b = r;
+    }
+
+    printf("UCLN = %d\n", a);
+    printf("BCNN = %d\n", (tempA * tempB) / a);
+}
+
+// ====== CHUC NANG 3: TINH TIEN KARAOKE ======
+void tinhTienKaraoke() {
+    int gioBatDau, gioKetThuc;
+    float tien;
+
+    printf("Nhap gio bat dau: ");
+    scanf("%d", &gioBatDau);
+    printf("Nhap gio ket thuc: ");
+    scanf("%d", &gioKetThuc);
+
+    int soGio = gioKetThuc - gioBatDau;
+
+    if(soGio <= 3)
+        tien = soGio * 150000;
+    else
+        tien = 3 * 150000 + (soGio - 3) * 100000;
+
+    printf("Tien thanh toan: %.0f\n", tien);
+}
+
+// ====== CHUC NANG 4: TINH TIEN DIEN ======
+void tinhTienDien() {
+    int soDien;
+    float tien = 0;
+
+    printf("Nhap so dien: ");
+    scanf("%d", &soDien);
+
+    if(soDien <= 50)
+        tien = soDien * 1678;
+    else if(soDien <= 100)
+        tien = 50 * 1678 + (soDien - 50) * 1734;
+    else
+        tien = 50 * 1678 + 50 * 1734 + (soDien - 100) * 2014;
+
+    printf("Tien dien: %.0f\n", tien);
+}
+
+// ====== CHUC NANG 5: DOI TIEN ======
+void doiTien() {
+    int tien;
+    printf("Nhap so tien: ");
+    scanf("%d", &tien);
+
+    printf("So to 500k: %d\n", tien / 500000);
+    tien %= 500000;
+
+    printf("So to 200k: %d\n", tien / 200000);
+    tien %= 200000;
+
+    printf("So to 100k: %d\n", tien / 100000);
+}
+
+// ====== CHUC NANG 6: TINH LAI VAY ======
+void tinhLaiVay() {
+    float tienVay = 100000000;
+    float laiSuat = 0.05;
+    int thang = 12;
+
+    for(int i = 1; i <= thang; i++) {
+        float lai = tienVay * laiSuat;
+        printf("Thang %d: Lai = %.0f\n", i, lai);
+    }
+}
+
+// ====== CHUC NANG 7: VAY MUA XE ======
+void vayMuaXe() {
+    float giaXe = 500000000;
+    float traTruoc = giaXe * 0.2;
+    float vay = giaXe - traTruoc;
+
+    printf("Tien tra truoc: %.0f\n", traTruoc);
+    printf("Tien vay: %.0f\n", vay);
+}
+
+// ====== CHUC NANG 8: SAP XEP SINH VIEN ======
+void sapXepSinhVien() {
+    int n;
+    printf("Nhap so sinh vien: ");
+    scanf("%d", &n);
+
+    float diem[n];
+
+    for(int i = 0; i < n; i++) {
+        printf("Nhap diem SV %d: ", i+1);
+        scanf("%f", &diem[i]);
+    }
+
+    for(int i = 0; i < n-1; i++) {
+        for(int j = i+1; j < n; j++) {
+            if(diem[i] < diem[j]) {
+                float temp = diem[i];
+                diem[i] = diem[j];
+                diem[j] = temp;
+            }
+        }
+    }
+
+    printf("Danh sach sau sap xep:\n");
+    for(int i = 0; i < n; i++)
+        printf("%.2f\n", diem[i]);
+}
+
+// ====== MENU ======
 int main() {
-    int chonChucNang;
+    int choice;
 
     do {
-        printf("Chon chuc nang:\n");
-        printf("1. Kiem tra so nguyen\n");
-        printf("2. Tim Uoc so chung va boi so chung cua 2 so\n");
-        printf("3. Tinh tien cho quan Karaoke\n");
+        printf("\n===== MENU ASM2 =====\n");
+        printf("1. Kiem tra so nguyen to\n");
+        printf("2. Tim UCLN & BCNN\n");
+        printf("3. Tinh tien Karaoke\n");
         printf("4. Tinh tien dien\n");
-        printf("5. Chuc nang doi tien\n");
-        printf("6. Tinh lai suat vay ngan hang vay tra gop\n");
-        printf("7. Vay tien mua xe\n");
-        printf("8. Sap xep thong tin sinh vien\n");
-        printf("9. Game FPOLY-LOTT\n");
-        printf("10. Tinh toan phan so\n");
+        printf("5. Doi tien\n");
+        printf("6. Tinh lai vay\n");
+        printf("7. Vay mua xe\n");
+        printf("8. Sap xep sinh vien\n");
         printf("0. Thoat\n");
-        printf("Nhap lua chon cua ban: ");
-        scanf("%d", &chonChucNang);
+        printf("Chon: ");
+        scanf("%d", &choice);
 
-        switch (chonChucNang) {
-            case 1:
-                // Gọi hàm kiểm tra số nguyên
-                printf("DA CHON CHUC NANG 1: KIEM TRA SO NGUYEN\n");
-                break;
-            case 2:
-                // Gọi hàm tìm Ước số chung và bội số chung
-                printf("DA CHON CHUC NANG 2: TIM UOC SO CHUNG VA BOI SO CHUNG CUA 2 SO\n");
-                break;
-            case 3:
-                // Gọi hàm tính tiền cho quán Karaoke
-                printf("DA CHON CHUC NANG 3: TINH TIEN CHO QUAN KARAOKE\n");
-                break;
-            case 4:
-                // Gọi hàm tính tiền điện
-                printf("DA CHON CHUC NANG 4: TINH TIEN DIEN\n");
-                break;
-            case 5:
-                // Gọi hàm đổi tiền
-                printf("DA CHON CHUC NANG 5: DOI TIEN\n");
-                break;
-            case 6:
-                // Gọi hàm tính lãi suất vay ngân hàng
-                printf("DA CHON CHUC NANG 6: TINH LAI SUAT VAY NGAN HANG VAY TRA GOP\n");
-                break;
-            case 7:
-                // Gọi hàm vay tiền mua xe
-                printf("DA CHON CHUC NANG 7: VAY TIEN MUA XE\n");
-                break;
-            case 8:
-                // Gọi hàm sắp xếp thông tin sinh viên
-                printf("DA CHON CHUC NANG 8: SAP XEP THONG TIN SINH VIEN\n");
-                break;
-            case 9:
-                // Gọi hàm game FPOLY-LOTT
-                printf("DA CHON CHUC NANG 9: GAME FPOLY-LOTT\n");
-                break;
-            case 10:
-                // Gọi hàm tính toán phân số
-                printf("DA CHON CHUC NANG 10: TINH TOAN PHAN SO\n");
-                break;
-            case 0:
-                printf("Thoat chuong trinh.\n");
-                break;
-            default:
-                printf("Lua chon khong hop le. Vui long chon lai.\n");
+        switch(choice) {
+            case 1: kiemTraSoNguyenTo(); break;
+            case 2: ucln_bcnn(); break;
+            case 3: tinhTienKaraoke(); break;
+            case 4: tinhTienDien(); break;
+            case 5: doiTien(); break;
+            case 6: tinhLaiVay(); break;
+            case 7: vayMuaXe(); break;
+            case 8: sapXepSinhVien(); break;
+            case 0: printf("Thoat chuong trinh\n"); break;
+            default: printf("Lua chon khong hop le\n");
         }
-    } while (chonChucNang != 0);
+
+    } while(choice != 0);
 
     return 0;
 }
